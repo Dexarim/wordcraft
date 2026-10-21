@@ -57,6 +57,7 @@ pub mod ink;
 pub mod keys;
 pub mod keytips;
 pub mod mini_toolbar;
+pub mod native_menu;
 pub mod objects;
 pub mod options;
 pub mod panes;
@@ -392,6 +393,7 @@ pub struct WordApp {
     applied_theme: Option<theme::Appearance>,
     /// The desktop's light/dark choice, watched while the app runs (Linux has no winit answer).
     desktop_theme: desktop_theme::DesktopTheme,
+    desktop_accent: Option<[f64; 3]>,
     /// The last answer [`desktop_theme`] gave, so a frame that asks costs nothing.
     desktop_dark: Option<bool>,
     /// The interface language whose editing language the session last got ([`i18n::Lang::editing_lang`]).
@@ -491,6 +493,7 @@ impl WordApp {
             applied_theme: None,
             // Inert until the app binary calls `watch_desktop_theme`.
             desktop_theme: desktop_theme::DesktopTheme::default(),
+            desktop_accent: None,
             desktop_dark: None,
             applied_editing: None,
             system_animations: None,
@@ -1324,7 +1327,8 @@ impl WordApp {
         self.ensure_caption_fonts();
         self.install_ui_fonts(ctx, lang);
         if let Some(answer) = self.desktop_theme.take_change() {
-            self.desktop_dark = Some(answer);
+            self.desktop_dark = answer.dark;
+            self.desktop_accent = answer.accent;
         }
         // Both palettes are installed and egui picks one: with `System` it follows an OS appearance
         // change live (winit reports it and repaints, #311). Where winit is silent (Linux) the
@@ -1338,7 +1342,8 @@ impl WordApp {
             },
             other => other,
         };
-        if self.applied_theme != Some(effective) {
+        let accent_changed = theme::set_system_accent(ctx, if self.ui.theme == theme::Appearance::System { self.desktop_accent } else { None });
+        if self.applied_theme != Some(effective) || accent_changed {
             theme::apply(ctx, effective);
             self.applied_theme = Some(effective);
         }

@@ -12,6 +12,8 @@
 mod animations;
 #[cfg(target_os = "macos")]
 mod apple_events;
+#[cfg(target_os = "linux")]
+mod appmenu;
 mod clipboard;
 mod control_server;
 mod default_apps;
@@ -37,6 +39,7 @@ struct App(
     Option<control_server::KeyFile>,
     file_dialogs::Launcher,
     #[cfg(target_os = "macos")] fmv_macos_events::Inbox,
+    #[cfg(target_os = "linux")] Option<appmenu::Bridge>,
 );
 
 impl eframe::App for App {
@@ -44,6 +47,10 @@ impl eframe::App for App {
         #[cfg(target_os = "macos")]
         apple_events::poll(&self.4, &mut self.0, ctx);
         self.0.logic(ctx);
+        #[cfg(target_os = "linux")]
+        if let Some(menu) = &mut self.4 {
+            menu.poll(&mut self.0);
+        }
         self.3.show(frame);
         let prev = self.0.ui.window;
         self.0.ui.window = ctx.input(|i| WindowGeometry::track(prev, i.viewport(), i.viewport_rect().size()));
@@ -75,9 +82,15 @@ impl eframe::App for App {
     }
     fn ui(&mut self, ui: &mut egui::Ui, frame: &mut eframe::Frame) {
         self.0.ui(ui);
+        #[cfg(target_os = "linux")]
+        if let Some(menu) = &mut self.4 {
+            menu.publish(&self.0);
+        }
         self.3.show(frame);
     }
     fn on_exit(&mut self) {
+        #[cfg(target_os = "linux")]
+        self.4.take();
         print::finish_pending_jobs();
         save_prefs(&self.0);
         if let Some(key_file) = &self.2 {
@@ -347,6 +360,8 @@ fn main() -> eframe::Result {
                     log::warn!("{f}: {e}");
                 }
             }
+            #[cfg(target_os = "linux")]
+            let menu = appmenu::Bridge::start(cc, &app);
             Ok(Box::new(App(
                 app,
                 restored,
@@ -354,6 +369,8 @@ fn main() -> eframe::Result {
                 dialogs,
                 #[cfg(target_os = "macos")]
                 apple_events.connect(&cc.egui_ctx),
+                #[cfg(target_os = "linux")]
+                menu,
             )))
         }),
     )

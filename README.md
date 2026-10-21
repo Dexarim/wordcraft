@@ -281,6 +281,21 @@ of file drag-and-drop), start it with `WORDCRAFT_WAYLAND=1`:
 WORDCRAFT_WAYLAND=1 wordcraft
 ```
 
+**KDE Plasma Global Menu:** the Linux adapter supports native Wayland and X11/XWayland. The
+panel's **Global Menu** widget can display File, Home, Insert, Layout, References, Review,
+View, Tools and Help. This also works with an XWayland window in a Plasma Wayland session.
+The menu follows the interface language, command availability, Undo/Redo and formatting
+checkmarks; Table Layout appears while editing a table. Tools also opens the application's
+ribbon tabs, including custom tabs. The ribbon remains available for galleries and other rich
+controls. Menu actions use the same dialogs and save confirmation as buttons in the window.
+
+Add Plasma's Global Menu widget to the desired panel if it is absent. No additional GTK module
+is needed. To disable exporting the menu, use `WORDCRAFT_NO_GLOBAL_MENU=1 wordcraft`
+(`KDE_NO_GLOBAL_MENU` is also respected). Native Wayland uses a same-surface KDE AppMenu
+binding through a small bundled safe winit accessor, not an X11 registrar call.
+See [KDE integration and validation](docs/KDE.md) for build, theme, DPI and fallback details.
+Flatpak packaging still needs separate sandbox runtime validation.
+
 **Arch Linux (AUR).** Community members maintain three AUR packages; the project doesn't publish
 to the AUR itself. Install one of them:
 | Package | What it installs | Choose it when |

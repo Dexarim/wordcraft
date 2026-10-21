@@ -1,6 +1,7 @@
 [workspace]
 resolver = "3"
 members = ["crates/*", "apps/*", "xtask"]
+exclude = ["vendor/craft-desktop", "vendor/winit"]
 default-members = ["crates/*", "apps/wordcraft", "apps/wordcraft-cli", "xtask"]
 
 [workspace.package]
@@ -9,6 +10,9 @@ edition = "2024"
 license = "MIT OR Apache-2.0"
 rust-version = "1.90"
 repository = "https://github.com/storytold/wordcraft"
+
+[patch.crates-io]
+winit = { path = "vendor/winit" }
 
 [workspace.dependencies]
 # internal
