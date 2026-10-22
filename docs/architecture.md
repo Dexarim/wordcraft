@@ -2,7 +2,7 @@
 
 > **KDE integration update:** 2026-10-21 · minor: shared Linux transport, native Wayland binding and portal appearance; see [KDE.md](KDE.md).
 
-> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-10 · **Change:** minor (`proof` is per language: English and Polish; previously major: first committed version; `plan/architecture.md` is local-only) · **Target:** Microsoft Word (Microsoft 365) for Mac 16.113.4
+> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-22 · **Change:** minor (`proof` is per language: English and Polish; previously major: first committed version; `plan/architecture.md` is local-only) · **Target:** Microsoft Word (Microsoft 365) for Mac 16.113.4
 
 How WordCraft is built today (origin/main `40c5d51`). The longer design notes in
 `plan/architecture.md` are gitignored and local to the original author's machine; this file is the
@@ -66,8 +66,9 @@ per parent, so Plasma's lazily loaded submenu caches stay in sync with the edito
 ## Testing and gates
 
 KDE integration validation (2026-10-14): native workspace tests, Clippy, formatting, assets and
-layer checks passed. The private-bus test (`dbus-run-session -- cargo test -p wordcraft
-appmenu_dbus -- --ignored`) covers the wire layout and activation. A live Plasma session check
+layer checks passed. In the current shared adapter, the private-bus test
+(`dbus-run-session -- cargo test --manifest-path vendor/craft-desktop/Cargo.toml
+--features linux,portal appmenu_dbus -- --ignored`) covers the wire layout and activation. A live Plasma session check
 verified registration, menu reads by plasmashell, English/Russian labels, Bold activation and
 its property-update signal, Undo availability and the unsaved-document guard. Socket tests need
 permission to bind local sockets. The WASM check was blocked by the missing
@@ -87,6 +88,7 @@ permission to bind local sockets. The WASM check was blocked by the missing
 
 | Date | Change | Summary |
 |---|---|---|
+| 2026-10-22 | trivial | Review follow-up: point the private-session-bus test command at the standalone vendored adapter |
 | 2026-10-21 | minor | Shared Linux integration; safe native Wayland association, standardized portal theme/accent, fractional-DPI test hooks and tab overflow |
 | 2026-10-14 | minor | KDE Global Menu: toolkit-independent menu model and Linux DBusMenu/window adapter for X11/XWayland |
 | 2026-10-10 | minor | `proof`: proofing languages (English, Polish), affix engine, Polish patterns; layout and engine route each run by its language |

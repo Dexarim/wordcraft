@@ -80,5 +80,15 @@ do not overwrite a real document or clipboard. Check both native Wayland and XWa
 7. Open/save/cancel a synthetic document through the KDE portal file picker.
 
 Automated protocol/layout tests do not certify visible Plasma rendering, real monitor
-transitions, file chooser interaction or sandbox packaging. The workspace's final
-`docs/KDE_INTEGRATION_REPORT.md` records which checks were actually run.
+transitions, file chooser interaction or sandbox packaging.
+
+## Recorded verification (2026-10-21)
+
+Desktop check/build, workspace Clippy, formatting and asset/layer checks passed.
+The UI suite passed 367 tests (2 ignored); four desktop tests also passed.
+The shared adapter's private-session-bus tests were run separately.
+In a live Plasma session, native Wayland menu reads, Bold state updates, About modal
+blocking, dirty-document Close and disabled-export fallback were checked. XWayland
+registration and Bold activation were also checked. Ten light/dark headless screenshots
+at 100/125/150/175/200% were inspected, with Ribbon arrow/wheel regression coverage.
+These observations do not establish full CI, WASM, Flatpak or physical mixed-DPI acceptance.

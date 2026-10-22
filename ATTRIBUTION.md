@@ -8,10 +8,6 @@ Generated-in-code art is original and has no file to list: the UI icon set (`cra
 
 | Asset | Author | Source | Licence | Notes |
 |---|---|---|---|---|
-| `vendor/winit/docs/res/keyboard_standard_1_key.svg` | winit contributors | https://github.com/rust-windowing/winit/tree/v0.30.13 | Apache-2.0 (`vendor/winit/LICENSE`) | Unmodified upstream dependency documentation/example; not application art |
-| `vendor/winit/docs/res/keyboard_right_shift_key.svg` | winit contributors | https://github.com/rust-windowing/winit/tree/v0.30.13 | Apache-2.0 (`vendor/winit/LICENSE`) | Unmodified upstream dependency documentation/example; not application art |
-| `vendor/winit/docs/res/keyboard_numpad_1_key.svg` | winit contributors | https://github.com/rust-windowing/winit/tree/v0.30.13 | Apache-2.0 (`vendor/winit/LICENSE`) | Unmodified upstream dependency documentation/example; not application art |
-| `vendor/winit/docs/res/keyboard_left_shift_key.svg` | winit contributors | https://github.com/rust-windowing/winit/tree/v0.30.13 | Apache-2.0 (`vendor/winit/LICENSE`) | Unmodified upstream dependency documentation/example; not application art |
 | `vendor/winit/examples/data/icon.png` | winit contributors | https://github.com/rust-windowing/winit/tree/v0.30.13 | Apache-2.0 (`vendor/winit/LICENSE`) | Unmodified upstream dependency documentation/example; not application art |
 | `vendor/winit/examples/data/gradient.png` | winit contributors | https://github.com/rust-windowing/winit/tree/v0.30.13 | Apache-2.0 (`vendor/winit/LICENSE`) | Unmodified upstream dependency documentation/example; not application art |
 | `vendor/winit/examples/data/cross2.png` | winit contributors | https://github.com/rust-windowing/winit/tree/v0.30.13 | Apache-2.0 (`vendor/winit/LICENSE`) | Unmodified upstream dependency documentation/example; not application art |
